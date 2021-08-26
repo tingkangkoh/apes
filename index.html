@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/4f17ee75f1.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+    <header>
+        <p class="title">My Library</p><i class="fas fa-book-open"></i>
+    </header>
+    <section class="mainSection">
+        <div class="addBookDiv">
+            <button id="addBook">Add Book</button>
+        </div>
+       
+        <div class="container">
+           
+        </div>
+     
+        
+        <div id="myModal" class="modal">
+            <div class="form">
+                <span class="close">&times;</span>
+                <form action="" id="bookForm">
+                    <label for="title">Title</label><br>
+                    <input type="text" id="title" name="title"><br>
+                    <label for="author">Author</label><br>
+                    <input type="text" id="author" name="author"><br>
+                    <label for="pages">Pages</label><br>
+                    <input type="number" id="pages" name="pages"><br>
+                    <label for="read">Have Read?</label>
+                    <input type="checkbox" id="read" name="read" value="read"><br>
+                    
+                
+                    <input type="submit" value="Submit">
+    
+                </form>
+                
+            </div>
+        </div>
+    </section>
+    
+    <script src="script.js"></script>
+</body>
+</html>

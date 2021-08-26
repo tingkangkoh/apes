@@ -1,0 +1,166 @@
+body{
+    margin:0;
+    padding:0;
+    font-family: 'Nanum Gothic', sans-serif;
+    background-color: #012a4a;
+}
+button:hover{
+    cursor:pointer;
+}
+.book{
+    border:1px solid black;
+    margin:25px 0;
+}
+
+.book td{
+    border:1px solid black;
+}
+
+.card{
+    width:350px;
+    height:500px;
+    border:1px solid white;
+    text-align:center;
+    padding:15px;
+    margin:25px;
+    color:white;
+    font-size:25px;
+    position:relative;
+}
+
+.addBookDiv{
+    text-align:center;
+}
+header{
+    text-align:center;
+    /* background-color:#014f86; */
+    background-color:#012a4a;
+    margin:0;
+    padding:1px;
+    color:white;
+    /* border-bottom:3px solid black; */
+    font-size:40px;
+}
+.title{
+    display:inline-block;
+    padding-top:15px;
+    margin-right:15px;
+}
+
+.container{
+    padding:0 50px;
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.button-green{
+    background-color:#74c69d;
+}
+
+.button-red{
+    background-color:#e5383b;
+}
+
+.card-green{
+    border:2px solid #74c69d;
+}
+.card-red{
+    border:2px solid #e5383b;
+}
+
+.notReadButton span{
+    content: "\292B";
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    z-index:1;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+
+}
+
+.form{
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 25%; 
+    height:40%;
+    text-align:center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .mainSection{
+      background-color:#012a4a;
+      padding-top:25px;
+  }
+
+  #addBook{
+      width:250px;
+      height:50px;
+      background-color:#a9d6e5;
+      color:#003049;
+      font-size:20px;
+      border-color:black;
+  }
+
+  .readButton{
+      width:200px;
+      height:50px;
+      border:0.5px solid white;
+      font-size:20px;
+  }
+
+  #title{
+      position:relative;
+      left:8px;
+  }
+
+  label[for="title"]{
+      position:relative;
+      left:8px;
+  }
+
+  input[type="text"]{
+      width:350px;
+      height:25px;
+  }
+
+  #pages{
+      width:60px;
+      height:30px;
+  }
+
+  input[type="submit"]{
+      margin-top:15px;
+  }
+
+  .removeButton{
+      height:50px;
+      width:50px;
+      position:absolute;
+      bottom:20px;
+      right: 165px;
+      background-color:#012a4a;
+      border-style:none;
+      color:white;
+  }
