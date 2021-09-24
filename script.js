@@ -130,11 +130,24 @@ var btn = document.getElementById("addBook");
 var span = document.getElementsByClassName("close")[0];
 
 function addBook(){
-    modal.style.display = "none";
+    
     var title=document.getElementById("title").value;
     var author=document.getElementById("author").value;
     var pages=document.getElementById("pages").value;
     var read=document.getElementById("read").checked;
+    if(title==""){
+        alert("Please enter title!");
+        return;
+    }
+    if(author==""){
+        alert("Please enter author");
+        return;
+    }
+    if(pages==""){
+        alert("Please choose number of pages");
+        return;
+    }
+    modal.style.display = "none";
     var book= new Book(title,author,pages,read);
     addBookToLibrary(book);
     //updateTable();
