@@ -1,3 +1,23 @@
+import './style.css'
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from "firebase/analytics";
+import { getDatabase, ref, set,child,get } from "firebase/database";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAp9eXbJgDypPL82ubN7T56BkIGgmVY4OY",
+    authDomain: "lib2-4ba88.firebaseapp.com",
+    databaseURL: "https://lib2-4ba88-default-rtdb.firebaseio.com/",
+    projectId: "lib2-4ba88",
+    storageBucket: "lib2-4ba88.appspot.com",
+    messagingSenderId: "507341878276",
+    appId: "1:507341878276:web:192ee03cf569667f2ef151",
+    measurementId: "G-N8K6H0XW6C"
+  };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
 let myLibrary=[];
 
 function Book(title,author,pages,read){
@@ -26,16 +46,34 @@ const JSONToBook = (book) => {
   
 
 const saveLocal = () => {
-    localStorage.setItem('library', JSON.stringify(myLibrary));
+    const db = getDatabase(app);
+    set(ref(db, 'library'), JSON.stringify(myLibrary));
+    // localStorage.setItem('library', JSON.stringify(myLibrary));
 }
 
-const restoreLocal = () => {
-    const books = JSON.parse(localStorage.getItem('library'))
-    if (books) {
-      myLibrary = books.map((book) => JSONToBook(book))
-    } else {
-      myLibrary = []
-    }
+const restoreLocal = (app) => {
+    const db = ref(getDatabase());
+get(child(db, 'library')).then((snapshot) => {
+  if (snapshot.exists()) {
+    const books=JSON.parse(snapshot.val());
+    console.log(books);
+    myLibrary = books.map((book) => JSONToBook(book))
+    console.log(myLibrary);
+    updateContainer();
+  } else {
+    myLibrary = []
+  }
+}).catch((error) => {
+  console.error(error);
+});
+
+    // const books = JSON.parse(localStorage.getItem('library'))
+    // if (books) {
+    //   myLibrary = books.map((book) => JSONToBook(book))
+    // } else {
+    //   myLibrary = []
+    // }\
+    
   }
 
 function addBookToLibrary(Book){
@@ -44,11 +82,13 @@ function addBookToLibrary(Book){
 }
 
 
-
+window.onload=function(){
+    restoreLocal();
+updateContainer();
+}
 
 //updateTable();
-restoreLocal();
-updateContainer();
+
 
 function switchtoRead(){
     document.querySelector(".notReadButton").hidden=true;
@@ -69,7 +109,7 @@ function updateContainer(){
         var title=document.createElement("p");
         var author=document.createElement("p");
         var pages=document.createElement("p");
-        title.textContent=myLibrary[i].title;
+        title.textContent="Book: "+myLibrary[i].title;
         author.textContent="by "+myLibrary[i].author;
         pages.textContent=myLibrary[i].pages+" pages";
         card.appendChild(title);

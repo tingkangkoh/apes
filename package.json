@@ -1,0 +1,28 @@
+{
+  "name": "library",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tingkangkoh/Library.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tingkangkoh/Library/issues"
+  },
+  "homepage": "https://github.com/tingkangkoh/Library#readme",
+  "dependencies": {
+    "firebase": "^9.2.0",
+    "webpack": "^5.61.0"
+  },
+  "devDependencies": {
+    "css-loader": "^6.5.0",
+    "style-loader": "^3.3.1",
+    "webpack-cli": "^4.9.1"
+  }
+}
