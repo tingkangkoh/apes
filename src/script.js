@@ -2,29 +2,37 @@ import './style.css'
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from "firebase/analytics";
 import { getDatabase, ref, set,child,get } from "firebase/database";
+import Monkey from './monkey.png';
+
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAp9eXbJgDypPL82ubN7T56BkIGgmVY4OY",
-    authDomain: "lib2-4ba88.firebaseapp.com",
-    databaseURL: "https://lib2-4ba88-default-rtdb.firebaseio.com/",
-    projectId: "lib2-4ba88",
-    storageBucket: "lib2-4ba88.appspot.com",
-    messagingSenderId: "507341878276",
-    appId: "1:507341878276:web:192ee03cf569667f2ef151",
-    measurementId: "G-N8K6H0XW6C"
-  };
+  apiKey: "AIzaSyBaI3dfyE9jUlImxd6Z8QIni997_IaZot4",
+  authDomain: "apes-8b8cc.firebaseapp.com",
+  projectId: "apes-8b8cc",
+  storageBucket: "apes-8b8cc.appspot.com",
+  messagingSenderId: "586312153253",
+  databaseURL:"https://apes-8b8cc-default-rtdb.firebaseio.com/",
+  appId: "1:586312153253:web:e48c8851c7f74b682eb54c"
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
+const monkey=new Image();
+monkey.src=Monkey;
+monkey.classList.add("monkey");
+document.getElementById("addBook").appendChild(monkey);
 let myLibrary=[];
 
-function Book(title,author,pages,read){
+function Book(title,champion,kda1,kda2,kda3,comments,youtube){
     this.title=title;
-    this.author=author;
-    this.pages=pages;
-    this.read=read;
+    this.champion=champion;
+    this.kda1=kda1;
+    this.kda2=kda2;
+    this.kda3=kda3;
+    this.comments=comments;
+    this.youtube=youtube;
     this.info=function(){
         return title+" by "+author+", "+pages+" pages, "+(read ?"read":"not read yet");
     }
@@ -40,7 +48,7 @@ Book.prototype.toggle=function(){
 
 
 const JSONToBook = (book) => {
-    return new Book(book.title, book.author, book.pages, book.read)
+    return new Book(book.title, book.champion,book.kda1,book.kda2,book.kda3,book.comments,book.youtube);
   }
 
   
@@ -107,49 +115,64 @@ function updateContainer(){
         card.setAttribute("data",i);
         card.classList.add("card");
         var title=document.createElement("p");
-        var author=document.createElement("p");
-        var pages=document.createElement("p");
-        title.textContent="Book: "+myLibrary[i].title;
-        author.textContent="by "+myLibrary[i].author;
-        pages.textContent=myLibrary[i].pages+" pages";
+        var champion=document.createElement("p");
+        var kda=document.createElement("p");
+        var comments=document.createElement("p");
+        title.textContent="Player: "+myLibrary[i].title;
+        champion.textContent="playing:" +myLibrary[i].champion;
+        kda.textContent=myLibrary[i].kda1+"/"+myLibrary[i].kda2+"/"+myLibrary[i].kda3
+        comments.textContent=myLibrary[i].comments;
         card.appendChild(title);
-        card.appendChild(author);
-        card.appendChild(pages);
+        card.appendChild(champion);
+        card.appendChild(kda);
+        card.appendChild(comments);
 
-        var ReadButton=document.createElement("button");
-        ReadButton.classList.add("readButton");
-        ReadButton.id="readButton"+(i+1);
+        let youtubeDiv=document.createElement("div");
 
-        ReadButton.addEventListener("click",function(){
-            myLibrary[i].toggle();
-            saveLocal();
-            updateContainer();
-        })
+        youtubeDiv.innerHTML=myLibrary[i].youtube;
 
-        if(myLibrary[i].read==true){
-            ReadButton.textContent="Read";
-            ReadButton.classList.add("button-green");
-            card.classList.add("card-green");
-        }else{
-            ReadButton.textContent="Not Read";
-            ReadButton.classList.add("button-red");
-            card.classList.add("card-red");
-        }
+        card.appendChild(youtubeDiv);
+        // var ReadButton=document.createElement("button");
+        // ReadButton.classList.add("readButton");
+        // ReadButton.id="readButton"+(i+1);
+
+        // ReadButton.addEventListener("click",function(){
+        //     myLibrary[i].toggle();
+        //     saveLocal();
+        //     updateContainer();
+        // })
+
+        // if(myLibrary[i].read==true){
+        //     ReadButton.textContent="Read";
+        //     ReadButton.classList.add("button-green");
+        //     card.classList.add("card-green");
+        // }else{
+        //     ReadButton.textContent="Not Read";
+        //     ReadButton.classList.add("button-red");
+        //     card.classList.add("card-red");
+        // }
         var removeButton=document.createElement("button");
         removeButton.classList.add("removeButton");
         removeButton.setAttribute("data",i);
         removeButton.innerHTML="<i class='fas fa-times-circle fa-3x'></i>";
 
         removeButton.addEventListener("click",function(e){
-            let index=this.getAttribute("data");
-            myLibrary.splice(index,1);
-            saveLocal();
-            updateContainer();
+            let input=prompt("Are you sure? Type y");
+            if(input==="y"){
+                let index=this.getAttribute("data");
+                myLibrary.splice(index,1);
+                saveLocal();
+                updateContainer();
+            }
+            else{
+                return;
+            }
+            
         })
         
         var br=document.createElement("br");
 
-        card.appendChild(ReadButton);
+        // card.appendChild(ReadButton);
         card.appendChild(br);
         card.appendChild(removeButton);
 
@@ -172,23 +195,26 @@ var span = document.getElementsByClassName("close")[0];
 function addBook(){
     
     var title=document.getElementById("title").value;
-    var author=document.getElementById("author").value;
-    var pages=document.getElementById("pages").value;
-    var read=document.getElementById("read").checked;
-    if(title==""){
-        alert("Please enter title!");
-        return;
-    }
-    if(author==""){
-        alert("Please enter author");
-        return;
-    }
-    if(pages==""){
-        alert("Please choose number of pages");
-        return;
-    }
+    var champion=document.getElementById("champion").value;
+    var kda1=document.getElementById("kda1").value;
+    var kda2=document.getElementById("kda2").value;
+    var kda3=document.getElementById("kda3").value;
+    var comments=document.getElementById("comments").value;
+    var youtube=document.getElementById("youtube").value;
+    // if(title==""){
+    //     alert("Please enter title!");
+    //     return;
+    // }
+    // if(author==""){
+    //     alert("Please enter author");
+    //     return;
+    // }
+    // if(pages==""){
+    //     alert("Please choose number of pages");
+    //     return;
+    // }
     modal.style.display = "none";
-    var book= new Book(title,author,pages,read);
+    var book= new Book(title,champion,kda1,kda2,kda3,comments,youtube);
     addBookToLibrary(book);
     //updateTable();
     updateContainer();
@@ -210,8 +236,12 @@ var btn = document.getElementById("addBook");
 var span = document.getElementsByClassName("close")[0];
 
 
+function playAudio(url){
+  new Audio(url).play();
+}
 btn.onclick = function() {
   modal.style.display = "block";
+  playAudio("monkeysounds.mp4");
 }
 
 span.onclick = function() {
